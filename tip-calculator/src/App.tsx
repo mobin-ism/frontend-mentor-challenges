@@ -1,4 +1,44 @@
+import { useState } from "react";
+import { FaDollarSign, FaUser } from "react-icons/fa";
+
 function App() {
+	const [bill, setBill] = useState(0);
+	const [tip, setTip] = useState(0);
+	const [people, setPeople] = useState(0);
+	const tipButtonBg = "bg-veryDarkCyan";
+
+	// calculate the tip using the total bill, tip percentage and number of people also calculate the tip per person and total tip
+	const totalTip = () => {
+		return (bill * (tip / 100)).toFixed(2);
+	};
+	const tipPerPerson = () => {
+		return people ? (parseFloat(totalTip()) / people).toFixed(2) : "0.00";
+	};
+
+	function handleTotalBill(totalBill: number) {
+		setBill(totalBill);
+		totalTip();
+		tipPerPerson();
+	}
+
+	function handlePeople(totalPeople: number) {
+		setPeople(totalPeople);
+		totalTip();
+		tipPerPerson();
+	}
+
+	function handleTipBtn(tip: number) {
+		setTip(tip);
+		totalTip();
+		tipPerPerson();
+	}
+
+	function handleResetButton() {
+		setBill(0);
+		setTip(0);
+		setPeople(0);
+	}
+
 	return (
 		<>
 			<div className="bg-lightGrayishCyan flex flex-col justify-center h-screen w-screen gap-10">
@@ -13,7 +53,7 @@ function App() {
 							<div className="col-span-6 flex flex-col gap-8">
 								<div className="relative flex flex-col gap-2">
 									<span className="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 text-[20px] mt-[30px]">
-										$
+										<FaDollarSign />
 									</span>
 									<label
 										htmlFor="bill"
@@ -22,10 +62,14 @@ function App() {
 										Bill
 									</label>
 									<input
-										type="text"
+										type="number"
 										className="w-full px-2 py-2 border-[2px] rounded-[4px] text-right border-strongCyan focus:outline-none focus:ring-1 focus:ring-strongCyan font-spaceMonoBold text-veryDarkCyan text-[24px]"
 										placeholder="0"
 										id="bill"
+										min={0}
+										max={100000}
+										value={bill}
+										onChange={(e) => handleTotalBill(+e.target.value)}
 									/>
 								</div>
 								<div className="flex flex-col gap-2">
@@ -36,32 +80,48 @@ function App() {
 										Select Tip %
 									</label>
 									<div className="grid grid-cols-3 gap-2">
-										<button className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]">
+										<button
+											className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]"
+											onClick={() => handleTipBtn(10)}
+										>
 											5%
 										</button>
-										<button className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]">
+										<button
+											className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]"
+											onClick={() => handleTipBtn(10)}
+										>
 											10%
 										</button>
-										<button className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]">
+										<button
+											className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]"
+											onClick={() => handleTipBtn(15)}
+										>
 											15%
 										</button>
-										<button className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]">
+										<button
+											className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]"
+											onClick={() => handleTipBtn(25)}
+										>
 											25%
 										</button>
-										<button className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]">
+										<button
+											className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]"
+											onClick={() => handleTipBtn(50)}
+										>
 											50%
 										</button>
 										<input
 											type="text"
-											className="w-full rounded-[4px] text-center border-grayishCyan focus:outline-none focus:ring-2 focus:ring-strongCyan font-spaceMonoBold text-veryDarkCyan text-[24px] bg-veryLightGrayishCyan"
+											className="w-full rounded-[4px] text-center border-grayishCyan focus:outline-none focus:ring-2 focus:ring-strongCyan font-spaceMonoBold text-veryDarkCyan text-[24px] bg-veryLightGrayishCyan active:bg-veryLightGrayishCyan "
 											placeholder="Custom"
 											id="bill"
+											onChange={(e) => handleTipBtn(+e.target.value)}
 										/>
 									</div>
 								</div>
 								<div className="relative flex flex-col gap-2">
 									<span className="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 text-[20px] mt-[30px]">
-										👤
+										<FaUser />
 									</span>
 									<label
 										htmlFor="number-of-people"
@@ -70,10 +130,14 @@ function App() {
 										Number of People
 									</label>
 									<input
-										type="text"
+										type="number"
 										className="w-full px-2 py-2 border-[2px] rounded-[4px] text-right border-strongCyan focus:outline-none focus:ring-1 focus:ring-strongCyan font-spaceMonoBold text-veryDarkCyan text-[24px]"
 										placeholder="0"
 										id="number-of-people"
+										onChange={(e) => handlePeople(+e.target.value)}
+										value={people}
+										min={0}
+										max={1000}
 									/>
 								</div>
 							</div>
@@ -88,24 +152,25 @@ function App() {
 										</div>
 									</div>
 									<div className="text-right font-spaceMonoBold text-[35px] text-strongCyan">
-										$0.00
+										${tipPerPerson()}
 									</div>
 								</div>
 								<div className="grid grid-cols-2">
 									<div className="">
-										<div className=" text-white font-spaceMonoBold">
-											Tip Amount
-										</div>
+										<div className=" text-white font-spaceMonoBold">Total</div>
 										<div className="font-spaceMonoRegular text-grayishCyan">
 											/ person
 										</div>
 									</div>
 									<div className="text-right font-spaceMonoBold text-[35px] text-strongCyan">
-										$0.00
+										${totalTip()}
 									</div>
 								</div>
 								<div className="mt-auto">
-									<button className="bg-strongCyan text-veryDarkCyan py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-strongCyan hover:font-spaceMonoBold font-spaceMonoBold font-[24px] w-full">
+									<button
+										className="bg-strongCyan text-veryDarkCyan py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold font-[24px] w-full"
+										onClick={handleResetButton}
+									>
 										RESET
 									</button>
 								</div>
