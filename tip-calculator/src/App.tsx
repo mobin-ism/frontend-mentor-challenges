@@ -5,7 +5,6 @@ function App() {
 	const [bill, setBill] = useState(0);
 	const [tip, setTip] = useState(0);
 	const [people, setPeople] = useState(0);
-	const tipButtonBg = "bg-veryDarkCyan";
 
 	// calculate the tip using the total bill, tip percentage and number of people also calculate the tip per person and total tip
 	const totalTip = () => {
@@ -64,11 +63,11 @@ function App() {
 									<input
 										type="number"
 										className="w-full px-2 py-2 border-[2px] rounded-[4px] text-right border-strongCyan focus:outline-none focus:ring-1 focus:ring-strongCyan font-spaceMonoBold text-veryDarkCyan text-[24px]"
-										placeholder="0"
+										placeholder={parseFloat(bill.toString()).toFixed(0)}
 										id="bill"
 										min={0}
 										max={100000}
-										value={bill}
+										value={bill > 0 ? bill : ""}
 										onChange={(e) => handleTotalBill(+e.target.value)}
 									/>
 								</div>
@@ -81,31 +80,52 @@ function App() {
 									</label>
 									<div className="grid grid-cols-3 gap-2">
 										<button
-											className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]"
-											onClick={() => handleTipBtn(10)}
+											className={`col-span-1 py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px] ${
+												tip === 5
+													? "bg-lightGrayishCyan text-veryDarkCyan"
+													: "bg-veryDarkCyan text-white"
+											}`}
+											onClick={() => handleTipBtn(5)}
 										>
 											5%
 										</button>
+
 										<button
-											className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]"
+											className={`col-span-1 py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px] ${
+												tip === 10
+													? "bg-lightGrayishCyan text-veryDarkCyan"
+													: "bg-veryDarkCyan text-white"
+											}`}
 											onClick={() => handleTipBtn(10)}
 										>
 											10%
 										</button>
 										<button
-											className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]"
+											className={`col-span-1 py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px] ${
+												tip === 15
+													? "bg-lightGrayishCyan text-veryDarkCyan"
+													: "bg-veryDarkCyan text-white"
+											}`}
 											onClick={() => handleTipBtn(15)}
 										>
 											15%
 										</button>
 										<button
-											className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]"
+											className={`col-span-1 py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px] ${
+												tip === 25
+													? "bg-lightGrayishCyan text-veryDarkCyan"
+													: "bg-veryDarkCyan text-white"
+											}`}
 											onClick={() => handleTipBtn(25)}
 										>
 											25%
 										</button>
 										<button
-											className="col-span-1 bg-veryDarkCyan text-white py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px]"
+											className={`col-span-1 py-3 rounded-[5px] hover:bg-lightGrayishCyan hover:text-veryDarkCyan hover:font-spaceMonoBold font-spaceMonoBold text-[24px] ${
+												tip === 50
+													? "bg-lightGrayishCyan text-veryDarkCyan"
+													: "bg-veryDarkCyan text-white"
+											}`}
 											onClick={() => handleTipBtn(50)}
 										>
 											50%
@@ -132,12 +152,12 @@ function App() {
 									<input
 										type="number"
 										className="w-full px-2 py-2 border-[2px] rounded-[4px] text-right border-strongCyan focus:outline-none focus:ring-1 focus:ring-strongCyan font-spaceMonoBold text-veryDarkCyan text-[24px]"
-										placeholder="0"
+										placeholder={parseInt(people.toString()).toFixed(0)}
 										id="number-of-people"
 										onChange={(e) => handlePeople(+e.target.value)}
-										value={people}
 										min={0}
 										max={1000}
+										value={people > 0 ? people : ""}
 									/>
 								</div>
 							</div>
